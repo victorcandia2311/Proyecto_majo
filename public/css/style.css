@@ -1,0 +1,58 @@
+.chart-container {
+    position: relative;
+    width: 100%;
+    min-height: 250px;
+}
+
+.chart-container canvas {
+    max-width: 100%;
+}
+
+/* PARA CELULARES */
+
+@media (max-width: 576px) {
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.35rem;
+    }
+
+    h3 {
+        font-size: 1.2rem;
+    }
+
+    .card-body {
+        padding: 1rem;
+    }
+
+    .btn {
+        font-size: 0.9rem;
+    }
+
+    .table {
+        font-size: 0.85rem;
+    }
+
+    .form-label {
+        font-size: 0.9rem;
+    }
+
+    .page-title {
+        font-size: 1.4rem;
+    }
+}
+
+/* PARA TABLETS */
+@media (min-width: 577px) and (max-width: 991px) {
+
+    .card-body {
+        padding: 1.25rem;
+    }
+
+    .table {
+        font-size: 0.95rem;
+    }
+}
