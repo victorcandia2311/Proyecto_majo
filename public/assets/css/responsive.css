@@ -1,0 +1,47 @@
+/* Configuración general */
+html,
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* Las imágenes no deben desbordar sus contenedores */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Los contenedores se adaptan a la pantalla */
+.container,
+.container-fluid {
+    width: 100%;
+}
+
+/* Tablas adaptables */
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Formularios */
+.form-control,
+.form-select {
+    max-width: 100%;
+}
+
+/* Los botones pueden ajustarse en pantallas pequeñas */
+.btn {
+    white-space: normal;
+}
+
+/* Evita que textos largos rompan el diseño */
+.card,
+.card-body,
+.table {
+    overflow-wrap: break-word;
+}
