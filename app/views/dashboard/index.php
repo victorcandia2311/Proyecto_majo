@@ -1,91 +1,102 @@
 <?php require_once __DIR__ . "/../layouts/header.php"; ?>
 
-<div class="container-fluid mt-4">
+<main class="container-fluid py-4">
 
-    <main class="container-fluid py-4">
+    <!-- ====================================================== -->
+    <!-- TÍTULO DEL DASHBOARD                                   -->
+    <!-- ====================================================== -->
 
     <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+
         <div>
-            <h2 class="mb-1">Dashboard</h2>
+            <h2 class="dashboard-title mb-1">
+                Dashboard
+            </h2>
+
             <p class="text-muted mb-0">
                 Resumen general del sistema de inventario.
             </p>
         </div>
+
     </div>
 
-    <!-- Tarjetas estadísticas -->
-    <div class="row g-3 mb-4">
-        <!-- Tarjetas -->
-    </div>
 
-    <!-- Gráficos -->
-    <div class="row g-4">
-        <!-- Gráficos -->
-    </div>
-
-    <!-- Alertas y rankings -->
-    <div class="row g-4 mt-1">
-        <!-- Tablas o alertas -->
-    </div>
-
-</main>
-
-    
-
-
-    <!-- ============================= -->
-    <!-- TARJETAS -->
-    <!-- ============================= -->
+    <!-- ====================================================== -->
+    <!-- TARJETAS ESTADÍSTICAS                                  -->
+    <!-- ====================================================== -->
 
     <div class="row g-3 mb-4">
 
+        <!-- Ventas del mes -->
         <div class="col-12 col-sm-6 col-xl-3">
-            <div class="card h-100 shadow-sm">
+
+            <div class="card dashboard-card h-100 shadow-sm">
+
                 <div class="card-body">
-                    <p class="card-muted mb-2">
+
+                    <p class="text-muted mb-2">
                         Ventas del mes
                     </p>
 
-                    <h2>
+                    <h3 class="mb-0">
                         <?= $resumen['cantidad_ventas']; ?>
-                    </h2>
+                    </h3>
+
                 </div>
+
             </div>
+
         </div>
 
 
-        <div class="col-12 col-sm-6 col-lg-3">
-            <div class="card h-100 shadow-sm">
+        <!-- Ingresos del mes -->
+        <div class="col-12 col-sm-6 col-xl-3">
+
+            <div class="card dashboard-card h-100 shadow-sm">
+
                 <div class="card-body">
-                    <p class="card-muted mb-2">
+
+                    <p class="text-muted mb-2">
                         Ingresos del mes
                     </p>
 
-                    <h3>
+                    <h3 class="mb-2">
+
                         S/
-                        <?= number_format($resumen['ingresos'], 2); ?>
+                        <?= number_format(
+                            $resumen['ingresos'],
+                            2
+                        ); ?>
+
                     </h3>
+
 
                     <?php if ($variacionVentas['variacion'] > 0): ?>
 
                         <p class="text-success mb-0">
-                ▲
+
+                            ▲
                             <?= number_format(
                                 $variacionVentas['variacion'],
                                 2
                             ); ?>%
+
                             respecto al mes anterior
+
                         </p>
 
                     <?php elseif ($variacionVentas['variacion'] < 0): ?>
 
                         <p class="text-danger mb-0">
-                ▼
+
+                            ▼
                             <?= number_format(
                                 abs($variacionVentas['variacion']),
                                 2
                             ); ?>%
+
                             respecto al mes anterior
+
                         </p>
 
                     <?php else: ?>
@@ -97,119 +108,229 @@
                     <?php endif; ?>
 
                 </div>
+
             </div>
+
         </div>
 
 
-        <div class="col-12 col-sm-6 col-lg-3">
-            <div class="card h-100 shadow-sm">
+        <!-- Productos vendidos -->
+        <div class="col-12 col-sm-6 col-xl-3">
+
+            <div class="card dashboard-card h-100 shadow-sm">
+
                 <div class="card-body">
-                    <p class="card-muted mb-2">
+
+                    <p class="text-muted mb-2">
                         Productos vendidos
-                    </p >
+                    </p>
 
-                    <h2>
+                    <h3 class="mb-0">
                         <?= $productosVendidos['productos_vendidos']; ?>
-                    </h2>
+                    </h3>
 
                 </div>
+
             </div>
+
         </div>
-    </div>
-
-    <br>
-
-    <!-- ============================= -->
-    <!-- VENTAS POR MES -->
-    <!-- ============================= -->
-
-    <div class="row g-3">
-
-            <div class="col-12 col-sm-6 col-lg-3">
-                <div class="card shadow-sm">
-                    <div class="card-header">
-                        <strong>
-                            Ventas por mes
-                        </strong>
-                    </div>
-
-                    <div class="card-body">
-                        <div class="chart-container">
-                            <canvas id="graficoVentas"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-12 col-sm-6 col-lg-3">
-                <div class="card h-100 shadow-sm">
-                    <div class="card-header">
-                        <strong>Productos vendidos por mes</strong>
-                    </div>
-
-                    <div class="card-body">
-                        <div class="chart-container">
-                            <canvas id="graficoProductosVendidos"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-    </div>
 
 
-    <br>
+        <!-- Stock bajo -->
+        <div class="col-12 col-sm-6 col-xl-3">
 
-    <!-- ============================= -->
-    <!-- PRODUCTO MÁS VENDIDO -->
-    <!-- ============================= -->
+            <div class="card dashboard-card h-100 shadow-sm border-warning">
 
-    <div class="col-12 col-sm-6 col-lg-3">
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <h6 class="text-muted">
-                    Producto más vendido
-                </h6>
+                <div class="card-body">
 
-                <?php if ($productoMasVendido): ?>
+                    <p class="text-muted mb-2">
+                        Productos con stock bajo
+                    </p>
 
-                    <h5 class="mt-3">
+                    <h3 class="text-warning mb-2">
+
                         <?= htmlspecialchars(
-                            $productoMasVendido['nombre_producto']
-                        ); ?>
-                    </h5>
+                            $cantidadProductosStockBajo
+                        ) ?>
+
+                    </h3>
 
                     <p class="mb-0">
-                        <strong>
-                            <?= $productoMasVendido['cantidad_vendida']; ?>
-                        </strong>
-                        unidades vendidas
+                        Productos con 10 unidades o menos.
                     </p>
 
-                <?php else: ?>
+                </div>
 
-                    <p class="text-muted mt-3 mb-0">
-                        No hay ventas este mes.
-                    </p>
-
-                <?php endif; ?>
-                
             </div>
+
         </div>
+
     </div>
 
 
-<br>
+    <!-- ====================================================== -->
+    <!-- GRÁFICOS PRINCIPALES                                   -->
+    <!-- ====================================================== -->
 
-    <!-- ============================= -->
-    <!-- MÉTODOS DE PAGO -->
-    <!-- ============================= -->
+    <div class="row g-4 mb-4">
 
-        <div class="col-12 col-sm-6">
-        
-            <div class="card shadow-sm">
+        <!-- Ventas por mes -->
+        <div class="col-12 col-lg-6">
+
+            <div class="card h-100 shadow-sm">
+
+                <div class="card-header">
+                    <strong>
+                        Ventas por mes
+                    </strong>
+                </div>
 
                 <div class="card-body">
+
+                    <div class="chart-container">
+                        <canvas id="graficoVentas"></canvas>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Productos vendidos por mes -->
+        <div class="col-12 col-lg-6">
+
+            <div class="card h-100 shadow-sm">
+
+                <div class="card-header">
+
+                    <strong>
+                        Productos vendidos por mes
+                    </strong>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="chart-container">
+                        <canvas id="graficoProductosVendidos"></canvas>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ====================================================== -->
+    <!-- STOCK BAJO + MÉTODOS DE PAGO                           -->
+    <!-- ====================================================== -->
+
+    <div class="row g-4 mb-4">
+
+
+        <!-- STOCK BAJO -->
+        <div class="col-12 col-xl-6">
+
+            <div class="card h-100 shadow-sm">
+
+                <div class="card-header table-warning">
+
+                    <strong>
+                        Alerta de stock bajo
+                    </strong>
+
+                </div>
+
+                <div class="card-body">
+
+                    <?php if (empty($productosStockBajo)): ?>
+
+                        <div class="alert alert-success mb-0">
+
+                            No hay productos con stock bajo.
+
+                        </div>
+
+                    <?php else: ?>
+
+                        <div class="table-responsive">
+
+                            <table class="table table-bordered table-hover align-middle mb-0">
+
+                                <thead class="table-warning">
+
+                                    <tr>
+
+                                        <th>
+                                            Producto
+                                        </th>
+
+                                        <th>
+                                            Stock actual
+                                        </th>
+
+                                        <th>
+                                            Stock mínimo
+                                        </th>
+
+                                    </tr>
+
+                                </thead>
+
+                                <tbody>
+
+                                    <?php foreach ($productosStockBajo as $producto): ?>
+
+                                        <tr>
+
+                                            <td>
+                                                <?= htmlspecialchars(
+                                                    $producto['nombre_producto']
+                                                ); ?>
+                                            </td>
+
+                                            <td>
+                                                <?= htmlspecialchars(
+                                                    $producto['stock_actual']
+                                                ); ?>
+                                            </td>
+
+                                            <td>
+                                                <?= htmlspecialchars(
+                                                    $producto['stock_minimo_alerta']
+                                                ); ?>
+                                            </td>
+
+                                        </tr>
+
+                                    <?php endforeach; ?>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    <?php endif; ?>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- MÉTODOS DE PAGO -->
+        <div class="col-12 col-xl-6">
+
+            <div class="card h-100 shadow-sm">
+
+                <div class="card-header">
 
                     <strong>
                         Ventas por método de pago
@@ -218,54 +339,78 @@
                 </div>
 
                 <div class="card-body">
-                    <div class="chart-container">
+
+                    <div class="chart-container mb-4">
                         <canvas id="graficoMetodos"></canvas>
                     </div>
 
+
                     <div class="table-responsive">
 
-                        <table class="table table-bordered table-hover align-middle">
+                        <table class="table table-bordered table-hover align-middle mb-0">
+
                             <thead class="table-dark">
+
                                 <tr>
-                                    <th>Método de pago</th>
-                                    <th>Cantidad de ventas</th>
-                                    <th>Total</th>
-                                    <th>Porcentaje</th>
+
+                                    <th>
+                                        Método de pago
+                                    </th>
+
+                                    <th>
+                                        Cantidad
+                                    </th>
+
+                                    <th>
+                                        Total
+                                    </th>
+
+                                    <th>
+                                        Porcentaje
+                                    </th>
+
                                 </tr>
+
                             </thead>
 
                             <tbody>
 
                                 <?php foreach ($ventasPorMetodo as $metodo): ?>
 
-                                <tr>
+                                    <tr>
 
-                                    <td>
-                                        <?= htmlspecialchars($metodo['metodo_pago']); ?>
-                                    </td>
+                                        <td>
+                                            <?= htmlspecialchars(
+                                                $metodo['metodo_pago']
+                                            ); ?>
+                                        </td>
 
-                                    <td>
-                                        <?= $metodo['cantidad']; ?>
-                                    </td>
+                                        <td>
+                                            <?= $metodo['cantidad']; ?>
+                                        </td>
 
-                                    <td>
-                                        S/
-                                        <?= number_format(
-                                            $metodo['total'],
-                                        2
-                                        ); ?>
-                                    </td>
-
-                                    <td>
-                                        <strong>
+                                        <td>
+                                            S/
                                             <?= number_format(
-                                            $metodo['porcentaje'],
-                                            2
-                                            ); ?>%
-                                        </strong>
-                                    </td>
+                                                $metodo['total'],
+                                                2
+                                            ); ?>
+                                        </td>
 
-                                </tr>
+                                        <td>
+
+                                            <strong>
+
+                                                <?= number_format(
+                                                    $metodo['porcentaje'],
+                                                    2
+                                                ); ?>%
+
+                                            </strong>
+
+                                        </td>
+
+                                    </tr>
 
                                 <?php endforeach; ?>
 
@@ -278,171 +423,53 @@
                 </div>
 
             </div>
-        </div>
-
-<br>
-    <!-- ============================= -->
-    <!-- STOCK BAJO -->
-    <!-- ============================= -->
-
-        <div class="col-12 col-sm-6 col-xl-3">
-        
-            <div class="card h-100 shadow-sm border-warning">
-
-                <div class="card-body">
-
-                    <h3 class="text-muted mb-2">
-                        Productos con stock bajo
-                    </h3>
-
-                    <h2 class="text-warning">
-                        <?= htmlspecialchars($cantidadProductosStockBajo) ?>
-                    </h2>
-
-                    <p class="mb-0">
-                        Productos con 10 unidades o menos.
-                    </p>
-
-
-
-                <div class="card-body">
-
-                <?php if (empty($productosStockBajo)): ?>
-
-                <div class="alert alert-success">
-                    No hay productos con stock bajo.
-                </div>
-
-                <?php else: ?>
-
-                <div class="table-responsive">
-
-                    <table class="table table-bordered table-hover align-middle">
-                        <thead class="table-warning">
-                            <tr>
-                                <th>Producto</th>
-                                <th>Stock actual</th>
-                                <th>Stock mínimo</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-
-                            <?php foreach (
-                                $productosStockBajo
-                                as $producto
-                            ): ?>
-
-                                <tr>
-
-                                    <td>
-                                        <?= htmlspecialchars(
-                                            $producto['nombre_producto']
-                                        ); ?>
-                                    </td>
-
-                                    <td>
-                                        <?= $producto['stock_actual']; ?>
-                                    </td>
-
-                                    <td>
-                                        <?= $producto['stock_minimo_alerta']; ?>
-                                    </td>
-
-                                </tr>
-
-                            <?php endforeach; ?>
-
-                        </tbody>
-
-                    </table>
-
-                </div>
-
-                <?php endif; ?>
-
-            </div>
 
         </div>
+
     </div>
 
-    <br>
 
-    <div class="col-12 col-sm-6 col-xl-3">
-        <div class="card h-100 shadow-sm">
-            <div class="card-body">
-                <strong>Top 3 productos más vendidos del mes</strong>
-            </div>
+    <!-- ====================================================== -->
+    <!-- PRODUCTO MÁS VENDIDO                                   -->
+    <!-- ====================================================== -->
 
-            <div class="card-body">
+    <div class="row g-4 mb-4">
 
-                <?php if (!empty($rankingProductos)): ?>
+        <div class="col-12">
 
-                <div class="table-responsive">
+            <div class="card shadow-sm">
 
-                    <table class="table table-bordered table-hover">
+                <div class="card-body">
 
-                        <thead class="table-dark">
+                    <h5 class="text-muted mb-3">
+                        Producto más vendido
+                    </h5>
 
-                            <tr>
-                                <th>Puesto</th>
-                                <th>Producto</th>
-                                <th>Unidades vendidas</th>
-                            </tr>
 
-                        </thead>
+                    <?php if ($productoMasVendido): ?>
 
-                        <tbody>
+                        <h4 class="mt-3">
 
-                            <?php
-                                $puesto = 1;
-                            ?>
+                            <?= htmlspecialchars(
+                                $productoMasVendido['nombre_producto']
+                            ); ?>
 
-                            <?php foreach ($rankingProductos as $producto): ?>
+                        </h4>
 
-                            <tr>
+                        <p class="mb-0">
 
-                                <td>
-                                    <?php if ($puesto === 1): ?>
-                                        1
-                                    <?php elseif ($puesto === 2): ?>
-                                        2
-                                    <?php elseif ($puesto === 3): ?>
-                                        3
-                                    <?php endif; ?>
-                                </td>
+                            <strong>
+                                <?= $productoMasVendido['cantidad_vendida']; ?>
+                            </strong>
 
-                                <td>
-                                    <?= htmlspecialchars(
-                                        $producto['nombre_producto']
-                                    ); ?>
-                                </td>
+                            unidades vendidas
 
-                                <td>
-                                    <strong>
-                                        <?= $producto['cantidad_vendida']; ?>
-                                    </strong>
-                                    unidades
-                                </td>
-
-                            </tr>
-
-                                <?php
-                                    $puesto++;
-                                ?>
-
-                                <?php endforeach; ?>
-
-                        </tbody>
-
-                    </table>
-
-                    </div>
+                        </p>
 
                     <?php else: ?>
 
                         <p class="text-muted mb-0">
-                        No hay productos vendidos durante este mes.
+                            No hay ventas este mes.
                         </p>
 
                     <?php endif; ?>
@@ -450,21 +477,132 @@
                 </div>
 
             </div>
-        </div>
-    </div>
-    
-        
-<?php require_once __DIR__ . "/../layouts/footer.php"; ?>
 
-</div>
+        </div>
+
+    </div>
+
+
+    <!-- ====================================================== -->
+    <!-- TOP 3 PRODUCTOS MÁS VENDIDOS                           -->
+    <!-- ====================================================== -->
+
+    <div class="row g-4 mb-4">
+
+        <div class="col-12">
+
+            <div class="card shadow-sm">
+
+                <div class="card-header">
+
+                    <strong>
+                        Top 3 productos más vendidos del mes
+                    </strong>
+
+                </div>
+
+
+                <div class="card-body">
+
+                    <?php if (!empty($rankingProductos)): ?>
+
+                        <div class="table-responsive">
+
+                            <table class="table table-hover align-middle mb-0">
+
+                                <thead class="table-dark">
+
+                                    <tr>
+
+                                        <th>
+                                            Puesto
+                                        </th>
+
+                                        <th>
+                                            Producto
+                                        </th>
+
+                                        <th>
+                                            Unidades vendidas
+                                        </th>
+
+                                    </tr>
+
+                                </thead>
+
+
+                                <tbody>
+
+                                    <?php $puesto = 1; ?>
+
+                                    <?php foreach ($rankingProductos as $producto): ?>
+
+                                        <tr>
+
+                                            <td>
+                                                <?= $puesto; ?>
+                                            </td>
+
+                                            <td>
+
+                                                <?= htmlspecialchars(
+                                                    $producto['nombre_producto']
+                                                ); ?>
+
+                                            </td>
+
+                                            <td>
+
+                                                <strong>
+                                                    <?= $producto['cantidad_vendida']; ?>
+                                                </strong>
+
+                                                unidades
+
+                                            </td>
+
+                                        </tr>
+
+                                        <?php $puesto++; ?>
+
+                                    <?php endforeach; ?>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    <?php else: ?>
+
+                        <p class="text-muted mb-0">
+                            No hay productos vendidos durante este mes.
+                        </p>
+
+                    <?php endif; ?>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- ====================================================== -->
+<!-- CHART.JS                                               -->
+<!-- ====================================================== -->
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
 
-    // ==========================================
+    // =====================================================
     // NOMBRES DE LOS MESES
-    // ==========================================
+    // =====================================================
 
     const nombresMeses = [
         'Enero',
@@ -481,27 +619,32 @@
         'Diciembre'
     ];
 
-    // ==========================================
-    // GRÁFICO DE VENTAS POR MES
-    // ==========================================
 
-    const ventasMeses = 
+    // =====================================================
+    // GRÁFICO DE VENTAS POR MES
+    // =====================================================
+
+    const ventasMeses =
         <?= json_encode($ventasPorMes); ?>;
-    
+
 
     const etiquetasMeses =
         ventasMeses.map(item => {
 
-        const partes = item.mes.split('-');
+            const partes = item.mes.split('-');
 
-        const año = partes[0];
-        const numeroMes = parseInt(partes[1], 10);
+            const año = partes[0];
+            const numeroMes = parseInt(partes[1], 10);
 
-        return nombresMeses[numeroMes - 1] + ' ' + año;
-    });
+            return nombresMeses[numeroMes - 1] + ' ' + año;
+
+        });
+
 
     const valoresVentas =
-        ventasMeses.map(item => Number(item.total));
+        ventasMeses.map(item =>
+            Number(item.total)
+        );
 
 
     new Chart(
@@ -526,6 +669,8 @@
 
                 responsive: true,
 
+                maintainAspectRatio: false,
+
                 scales: {
 
                     y: {
@@ -540,20 +685,24 @@
     );
 
 
-    // ==========================================
+    // =====================================================
     // GRÁFICO MÉTODOS DE PAGO
-    // ==========================================
+    // =====================================================
 
     const metodosPago =
         <?= json_encode($ventasPorMetodo); ?>;
 
 
     const etiquetasMetodos =
-        metodosPago.map(item => item.metodo_pago);
+        metodosPago.map(
+            item => item.metodo_pago
+        );
 
 
     const valoresMetodos =
-        metodosPago.map(item => Number(item.total));
+        metodosPago.map(
+            item => Number(item.total)
+        );
 
 
     new Chart(
@@ -576,35 +725,42 @@
 
             options: {
 
-                responsive: true
+                responsive: true,
+
+                maintainAspectRatio: false
 
             }
 
         }
     );
 
-    // ==========================================
+
+    // =====================================================
     // GRÁFICO PRODUCTOS VENDIDOS POR MES
-    // ==========================================
+    // =====================================================
 
     const datosProductosVendidos =
         <?= json_encode($productosVendidosPorMes); ?>;
 
-const mesesProductos =
-    datosProductosVendidos.map(item => {
 
-        const partes = item.mes.split('-');
+    const mesesProductos =
+        datosProductosVendidos.map(item => {
 
-        const año = partes[0];
-        const numeroMes = parseInt(partes[1], 10);
+            const partes = item.mes.split('-');
 
-        return nombresMeses[numeroMes - 1] + ' ' + año;
-    });
+            const año = partes[0];
+            const numeroMes = parseInt(partes[1], 10);
+
+            return nombresMeses[numeroMes - 1] + ' ' + año;
+
+        });
+
 
     const cantidadesProductos =
         datosProductosVendidos.map(
             item => Number(item.unidades_vendidas)
         );
+
 
     new Chart(
         document.getElementById(
@@ -637,6 +793,8 @@ const mesesProductos =
 
                 responsive: true,
 
+                maintainAspectRatio: false,
+
                 scales: {
 
                     y: {
@@ -656,6 +814,10 @@ const mesesProductos =
             }
 
         }
+
     );
 
 </script>
+
+
+<?php require_once __DIR__ . "/../layouts/footer.php"; ?>
